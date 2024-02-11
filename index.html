@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Converter</title>
+</head>
+<body>
+    <h1>Code Converter</h1>
+    <textarea id="code" placeholder="Enter code"></textarea>
+    <select id="targetLanguage">
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <!-- Add other languages as needed -->
+    </select>
+    <button onclick="convertCode()">Convert</button>
+    <div id="result"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        function convertCode() {
+            const code = document.getElementById('code').value;
+            const targetLanguage = document.getElementById('targetLanguage').value;
+
+            $.ajax({
+                type: 'POST',
+                url: '/convert',
+                data: {
+                    code: code,
+                    target_language: targetLanguage
+                },
+                success: function(data) {
+                    document.getElementById('result').innerText = data.result;
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
